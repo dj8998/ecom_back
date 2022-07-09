@@ -1,7 +1,7 @@
-const e = require("express");
-const Cart = require("../models/cart")
+import e from "express";
+import Cart from "../models/cart.js";
 
-exports.addItemToCart = (req, res) =>{
+export function addItemToCart(req, res){
 
     Cart.findOne({ user:req.user._id })
     .exec((error,cart) =>{

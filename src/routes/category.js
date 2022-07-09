@@ -1,17 +1,17 @@
-const express = require('express');
-const { addCategory, getCategory } = require('../controller/category');
-const { reqiredSignin, adminMiddleware } = require('../common-middleware');
-const router = express.Router();
-const multer  = require('multer')
-const path =require('path')
-const shortid = require('shortid')
+import { Router } from 'express';
+import { addCategory, getCategory } from '../controller/category.js';
+import { reqiredSignin, adminMiddleware } from '../common-middleware/index.js';
+const router = Router();
+import multer, { diskStorage } from 'multer';
+import { join, dirname } from 'path';
+import { generate } from 'shortid';
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(path.dirname(__dirname), 'uploads' ))
+      cb(null, join(dirname(__dirname), 'uploads' ))
     },
     filename: function (req, file, cb) {
-      cb(null, shortid.generate() + '-' +file.originalname)
+      cb(null, generate() + '-' +file.originalname)
     }
   })
 
@@ -21,4 +21,4 @@ const storage = multer.diskStorage({
 router.post('/category/create',reqiredSignin, adminMiddleware, upload.single('categoryImage') , addCategory);
 router.get('/category/getcategory', getCategory)
 
-module.exports = router
+export default router

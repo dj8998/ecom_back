@@ -1,9 +1,8 @@
-const express = require('express');
-const { reqiredSignin } = require('../../common-middleware');
-const {signup, signin, signout} = require('../../controller/admin/auth');
-const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../../validators/auth');
+import { Router } from 'express';
+import { signup, signin, signout } from '../../controller/admin/auth.js';
+import { validateSignupRequest, isRequestValidated, validateSigninRequest } from '../../validators/auth.js';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/admin/signup', validateSignupRequest, isRequestValidated, signup)
 router.post('/admin/signin' ,validateSigninRequest, isRequestValidated, signin)
@@ -15,4 +14,4 @@ router.post('/admin/signout', signout)
 //     res.status(200).json({message:"proflie"})
 // })
 
-module.exports = router;
+export default router;

@@ -1,17 +1,17 @@
-const express = require('express');
-const { reqiredSignin, adminMiddleware } = require('../common-middleware');
-const { createProduct, getProductsBySlug } = require('../controller/product');
-const multer  = require('multer')
-const path =require('path')
-const router = express.Router();
-const shortid = require('shortid')
+import { Router } from 'express';
+import { reqiredSignin, adminMiddleware } from '../common-middleware/index.js';
+import { createProduct, getProductsBySlug } from '../controller/product.js';
+import multer, { diskStorage } from 'multer';
+import { join, dirname } from 'path';
+const router = Router();
+import { generate } from 'shortid';
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(path.dirname(__dirname), 'uploads' ))
+      cb(null, join(dirname(__dirname), 'uploads' ))
     },
     filename: function (req, file, cb) {
-      cb(null, shortid.generate() + '-' +file.originalname)
+      cb(null, generate() + '-' +file.originalname)
     }
   })
 
@@ -22,4 +22,4 @@ router.post('/product/create',reqiredSignin, adminMiddleware, upload.array('prod
 router.get('/products/:slug', getProductsBySlug)
 // router.get('/category/getcategory', getCategory)
 
-module.exports = router
+export default router

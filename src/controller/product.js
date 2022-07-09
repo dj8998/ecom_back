@@ -1,9 +1,9 @@
-const Product = require("../models/product")
-var slugify = require('slugify');
-var shortid  = require('shortid');
-const Category = require('../models/category')
+import Product from "../models/product.js";
+import slugify from 'slugify';
+import shortid from 'shortid';
+import Category from '../models/category.js';
 
-exports.createProduct = (req, res) => {
+export function createProduct(req, res) {
     // res.status(200).json({file: req.files, body: req.body})
 
     const {
@@ -38,15 +38,16 @@ exports.createProduct = (req, res) => {
 
 }
 
-exports.getProductsBySlug = (req, res) =>{
+export function getProductsBySlug(req, res){
     const { slug } = req.params;
+    console.log('sl', slug);
     Category.findOne({slug: slug}).select('_id').exec((error, category) =>{
         if(error){
             return res.status(400).json({error})
         }
-
         if(category){
             Product.find({category: category._id}).exec((error, products) =>{
+                console.log('products', products);
                 if(error){
                     return res.status(400).json({error})
                 }

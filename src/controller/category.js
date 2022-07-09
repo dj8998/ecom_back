@@ -1,5 +1,5 @@
-const Category = require('../models/category');
-var slugify = require('slugify');
+import Category from '../models/category.js';
+import slugify from 'slugify';
 
 function createCategories( categories, parentId =null){
     const catergoryList = [];
@@ -21,7 +21,7 @@ function createCategories( categories, parentId =null){
     return catergoryList
 }
 
-exports.addCategory = (req, res) => {
+export function addCategory(req, res) {
 
 
     const categoryObj = {
@@ -47,8 +47,8 @@ exports.addCategory = (req, res) => {
     })
 }
 
-exports.getCategory = (req, res) =>{
-    Category.find({})
+export function getCategory(req, res){
+    find({})
     .exec((error, categories) =>{
         if(error){
             return res.status(400).json({error})

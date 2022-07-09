@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
+import verify from 'jsonwebtoken';
 
-exports.reqiredSignin = (req, res, next ) => {
+export function reqiredSignin(req, res, next ) {
 	if(req.headers.authorization){
 		const token = req.headers.authorization.split(" ")[1];
-		const user = jwt.verify(token, 'heheh');
+		const user = verify(token, 'heheh');
 		req.user = user
-		console.log(token);
+		console.log('asdad', token);
 		next();
 		// jwt.decode()
 	}
@@ -13,14 +13,14 @@ exports.reqiredSignin = (req, res, next ) => {
 
 }
 
-exports.userMiddleware = (req, res, next) => {
+export function userMiddleware(req, res, next) {
 	if(req.user.role !== 'user'){
 		return res.status(400).json({message: "admin denied"})
 	}
 	next();
 }
 
-exports.adminMiddleware = (req, res, next) => {
+export function adminMiddleware(req, res, next) {
 	if(req.user.role !== 'admin'){
 		return res.status(400).json({message: "user access denied"})
 	}

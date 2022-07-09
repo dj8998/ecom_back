@@ -1,5 +1,5 @@
-const Category = require('../../models/category')
-const Products = require('../../models/product')
+import Category from '../../models/category.js';
+import Products from '../../models/product.js';
 
 function createCategories( categories, parentId =null){
     const catergoryList = [];
@@ -21,7 +21,7 @@ function createCategories( categories, parentId =null){
     return catergoryList
 }
 
-exports.initailData = async (req, res ) => {
+export async function initailData(req, res ) {
     const categories = await Category.find({}).exec();
     const products = await Products.find({}).select('_id name price quantity description slug productPictures  category')
     .populate({path: 'category', select: '_id name'}).exec();

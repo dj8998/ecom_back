@@ -1,6 +1,6 @@
-const express = require('express');
-const { initailData } = require('../../controller/admin/initailData');
-const router = express.Router();
+import { Router } from 'express';
+import { initailData } from '../../controller/admin/initailData.js';
+const router = Router();
 
 router.post('/initialdata', initailData)
 
@@ -9,4 +9,4 @@ router.post('/initialdata', initailData)
 //     res.status(200).json({message:"proflie"})
 // })
 
-module.exports = router;
+export default router;

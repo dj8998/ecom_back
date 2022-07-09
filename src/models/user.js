@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
 	firstName: {
@@ -43,9 +43,9 @@ const userSchema = new mongoose.Schema({
 	profilePic: {type: String}
 }, {timestamps: true});
 
-// userSchema.virtual('password').set(function(password){
-// 	this.hash_password = bcrypt.hashSync(password, 10)
-// });
+userSchema.virtual('password').set(function(password){
+	this.hash_password = bcrypt.hashSync(password, 10)
+});
 
 userSchema.virtual('fulname').get(function(){
 	return `${this.firstName} ${this.lastName}`;
@@ -57,4 +57,4 @@ userSchema.methods = {
 	}
 }
 
-module.exports = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema)
